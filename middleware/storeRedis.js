@@ -1,23 +1,54 @@
-const redis = require("redis");
+import * as redis from 'redis';
 const REDIS_PORT = process.env.REDISCLOUD_URL || 6379
-const client = redis.createClient(REDIS_PORT);
 
-
-async function Redis(req, res, next) {
-
-  client.on("error", function (error) {
+module.exports.RedisStoreProducts = (req, res, next) => {
+  const client = redis.createClient(REDIS_PORT);
+  client.on("error", (error) => {
     console.error(error);
   });
-  client.setex("llave", 30, "hola mundo");
-  client.set("key", "value", redis.print);
-  client.get("llave", redis.print);
-  client.get("llave", (err, response) => {
+  client.get('products', (err, response) => {
     if (err || response === null) {
-      resolve(err);
+      console.log('NO DATA PRODUCTS');
+      next();
     } else {
-      console.log('-----', response);
+      res.json(JSON.parse(response));
     }
   });
-
+  client.quit();
 }
-module.exports.Redis = Redis;
+
+module.exports.RedisStoreProductId = (req, res, next) => {
+  const client = redis.createClient(REDIS_PORT);
+  client.on("error", (error) => {
+    console.error(error);
+  });
+  client.get('product', (err, response) => {
+    if (err || response === null) {
+      console.log('NO DATA PRODUCT');
+      next();
+    } else {
+      res.json(JSON.parse(response));
+    }
+  });
+  client.quit();
+}
+
+module.exports.RedisSaveProducts = (req, res, next) => {
+  const client = redis.createClient(REDIS_PORT);
+  client.on("error", (error) => {
+    console.error(error);
+  });
+  client.setex('products', 120, JSON.stringify(res.locals.products));
+  res.json(res.locals.products);
+  client.quit();
+}
+
+module.exports.RedisSaveProductId = (req, res, next) => {
+  const client = redis.createClient(REDIS_PORT);
+  client.on("error", (error) => {
+    console.error(error);
+  });
+  client.setex('product', 120, JSON.stringify(res.locals.product));
+  res.json(res.locals.product);
+  client.quit();
+}
