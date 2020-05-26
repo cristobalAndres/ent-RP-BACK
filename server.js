@@ -3,9 +3,10 @@ import express, { Router, json } from 'express';
 import { json as _json, urlencoded } from 'body-parser';
 let displayRoutes = require('express-routemap');
 import * as admin from 'firebase-admin';
+const fs = require('fs')
 
-
-const serviceAccount = require("./auth-3b4ef-firebase-adminsdk-segqh-1a47048dfc.json");
+const C_FIREBASE = fs.existsSync('./ACCOUNT_FIREBASE.json' ) ? './ACCOUNT_FIREBASE.json' : process.env.ACCOUNT_FIREBASE;
+const serviceAccount = require(C_FIREBASE);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
