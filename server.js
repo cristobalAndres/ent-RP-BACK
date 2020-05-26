@@ -6,10 +6,9 @@ import * as admin from 'firebase-admin';
 const fs = require('fs')
 
 const C_FIREBASE = fs.existsSync('./ACCOUNT_FIREBASE.json' ) ? './ACCOUNT_FIREBASE.json' : process.env.ACCOUNT_FIREBASE;
-const serviceAccount = require(C_FIREBASE);
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(C_FIREBASE),
   databaseURL: "https://auth-3b4ef.firebaseio.com"
 });
 

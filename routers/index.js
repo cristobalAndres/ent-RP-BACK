@@ -7,5 +7,7 @@ const { Redis } = require('../middleware/storeRedis');
 // middlewares.push(Status);
 
 module.exports = (app) => {
-  app.get('/', Redis, ValidToken);
+  app.get('/',
+  // Redis,
+  ValidToken);
 };
