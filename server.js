@@ -5,7 +5,7 @@ let displayRoutes = require('express-routemap');
 import * as admin from 'firebase-admin';
 const fs = require('fs')
 
-const C_FIREBASE = fs.existsSync('./ACCOUNT_FIREBASE.json' ) ? './ACCOUNT_FIREBASE.json' : process.env.ACCOUNT_FIREBASE;
+const C_FIREBASE = fs.existsSync('./ACCOUNT_FIREBASE.json' ) ? './ACCOUNT_FIREBASE.json' : JSON.parse(process.env.ACCOUNT_FIREBASE);
 
 admin.initializeApp({
   credential: admin.credential.cert(C_FIREBASE),
