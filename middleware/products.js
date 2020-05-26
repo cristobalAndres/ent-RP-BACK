@@ -7,7 +7,7 @@ const GetProducts = (req, res, next) => {
     GetProducts(req, res, next);
   } else {
     const products = '2000376105130P,477459,2000349423834P,2000374373623P,2000378039990P,2000377739068P,2000378433996P,2000362019298P,2000379038664,MPM00000036767,2000359510722P,2000366737211P';
-    return axios.get(`https://simple.ripley.cl/api/v2/products?partNumbers=${products}`)
+    return axios.get(`${process.env.ENDPOINT_RIPLEY}?partNumbers=${products}`)
       .then(response => {
         res.locals.products = response.data;
         next();
@@ -24,7 +24,7 @@ const GetProductId = (req, res, next) => {
     GetProductId(req, res, next);
   } else {
     const productId = req.params.id;
-    return axios.get(`https://simple.ripley.cl/api/v2/products/${productId}`)
+    return axios.get(`${process.env.ENDPOINT_RIPLEY}/${productId}`)
       .then(response => {
         res.locals.product = response.data;
         next();
