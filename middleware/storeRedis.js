@@ -1,6 +1,11 @@
 const redis = require("redis");
 const REDIS_PORT = process.env.REDIS_URL || 6379
-const client = redis.createClient(18606, "redis-18606.c17.us-east-1-4.ec2.cloud.redislabs.com", 'Xg8AKe7g29F3iKWlz8TrsOG8I5tJrjQt');
+const client = redis.createClient({
+  host: 'redis-18606.c17.us-east-1-4.ec2.cloud.redislabs.com',
+  port: 18606,
+  no_ready_check: true,
+  auth_pass: 'Xg8AKe7g29F3iKWlz8TrsOG8I5tJrjQt',                                                                                                                                                           
+});
 
 
 async function Redis(req, res, next) {
