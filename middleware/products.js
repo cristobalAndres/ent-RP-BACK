@@ -1,4 +1,3 @@
-// const axios = require('axios');
 import * as axios from 'axios';
 
 const GetProducts = (req, res, next) => {
