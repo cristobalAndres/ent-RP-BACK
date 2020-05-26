@@ -2,6 +2,15 @@ import { createServer } from 'http';
 import express, { Router, json } from 'express';
 import { json as _json, urlencoded } from 'body-parser';
 let displayRoutes = require('express-routemap');
+import * as admin from 'firebase-admin';
+
+
+const serviceAccount = require("./auth-3b4ef-firebase-adminsdk-segqh-1a47048dfc.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://auth-3b4ef.firebaseio.com"
+});
 
 import coors from './coors';
 import routers from './routers';
