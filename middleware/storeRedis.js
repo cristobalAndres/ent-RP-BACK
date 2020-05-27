@@ -18,11 +18,12 @@ module.exports.RedisStoreProducts = (req, res, next) => {
 }
 
 module.exports.RedisStoreProductId = (req, res, next) => {
+  const productId = req.params.id;
   const client = redis.createClient(REDIS_PORT);
   client.on("error", (error) => {
     console.error(error);
   });
-  client.get('product', (err, response) => {
+  client.get(productId, (err, response) => {
     if (err || response === null) {
       console.log('NO DATA PRODUCT');
       next();
@@ -44,11 +45,12 @@ module.exports.RedisSaveProducts = (req, res, next) => {
 }
 
 module.exports.RedisSaveProductId = (req, res, next) => {
+  const productId = req.params.id;
   const client = redis.createClient(REDIS_PORT);
   client.on("error", (error) => {
     console.error(error);
   });
-  client.setex('product', 120, JSON.stringify(res.locals.product));
+  client.setex(productId, 120, JSON.stringify(res.locals.product));
   res.json(res.locals.product);
   client.quit();
 }
