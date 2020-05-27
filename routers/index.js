@@ -3,13 +3,13 @@ const { RedisSaveProducts, RedisSaveProductId, RedisStoreProducts, RedisStorePro
 const { GetProducts, GetProductId } = require('../middleware/products');
 
 module.exports = (app) => {
-  app.post('/products',
+  app.get('/products',
     ValidToken,
     RedisStoreProducts,
     GetProducts,
     RedisSaveProducts,
   );
-  app.post('/product/:id',
+  app.get('/product/:id',
     ValidToken,
     RedisStoreProductId,
     GetProductId,
